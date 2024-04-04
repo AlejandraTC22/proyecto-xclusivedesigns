@@ -14,8 +14,11 @@ class ListProductsApp extends StatefulWidget {
 class _ListProductsAppState extends State<ListProductsApp> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(178, 255, 255, 255),
+      ),
       home: MyList(),
     );
   }
@@ -87,10 +90,12 @@ class _MyHomePageState extends State<MyList> {
                   itemBuilder: (context, index) {
                     final producto = productos[index];
                     return Padding(
+
                       padding: const EdgeInsets.all(12.0),
+
                         child: Container(
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black),
+                            color: const Color.fromARGB(255, 255, 255, 255),
                             borderRadius: BorderRadius.circular(15.0),
                           ),
                           child: Column(
@@ -125,56 +130,56 @@ class _MyHomePageState extends State<MyList> {
                                   Expanded(
                                     flex: 2,
                                     child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                                    child: Column(
-                                      children: [
-                                        Column(
-                                          children: [
-                                            Text(
-                                              '${producto['nombreProd']}',
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
+                                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                                      child: Column(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Text(
+                                                '${producto['nombreProd']}',
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16,
+                                                ),
+                                                textAlign: TextAlign.center,
                                               ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            
+                                              
 
-                                            Text(
-                                              '${producto['precioUnitario']}0 MXN',
-                                              style: const TextStyle(
-                                                fontFamily: 'Arial',
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromRGBO(236, 0, 0, 100),
+                                              Text(
+                                                '${producto['precioUnitario']}0 MXN',
+                                                style: const TextStyle(
+                                                  fontFamily: 'Arial',
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromRGBO(236, 0, 0, 100),
+                                                ),
                                               ),
-                                            ),
-                                            const SizedBox(height: 8.0),
+                                              const SizedBox(height: 8.0),
 
-                                            Container(
-                                              width: 100,
-                                              decoration: const BoxDecoration(
-                                                color: Color.fromARGB(255, 143, 141, 141),
-                                                shape: BoxShape.circle,
+                                              Container(
+                                                width: 100,
+                                                decoration: const BoxDecoration(
+                                                  color: Color.fromARGB(255, 143, 141, 141),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      '${producto['stock']}',
+                                                      style: const TextStyle(
+                                                        fontFamily: 'Arial',
+                                                        color: Color.fromARGB(255, 0, 0, 0),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 25,
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
                                               ),
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    '${producto['stock']}',
-                                                    style: const TextStyle(
-                                                      fontFamily: 'Arial',
-                                                      color: Color.fromARGB(255, 0, 0, 0),
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 25,
-                                                    ),
-                                                  )
-                                                ],
-                                              )
-                                            ),
-                                          ],
-                                        ),
-                                      ]
-                                    ),
+                                            ],
+                                          ),
+                                        ]
+                                      ),
                                     )
                                   ),
                                 ],

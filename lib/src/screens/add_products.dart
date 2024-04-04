@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:xclusivedesigns/src/screens/drawer_list/list_products.dart';
+import 'package:http/http.dart' as http;
 
 class AddProductsPage extends StatefulWidget {
   const AddProductsPage({super.key});
@@ -9,6 +9,60 @@ class AddProductsPage extends StatefulWidget {
 }
 
 class AddProductPageState extends State<AddProductsPage> {
+  bool loading = true;
+  late String error;
+  
+  final _formKey = GlobalKey<FormState>();
+  String nombreProducto = '';
+  String descripcion = '';
+  String material = '';
+  String precioUnitario = '';
+  String cantidadDisponible = '';
+
+  @override
+  void initState() {
+    super.initState();
+    error = '';
+    agregarProducto();
+  }
+
+  Future<void> agregarProducto() async {
+    Map<String, String> datosProducto = {
+      'nombreProd': nombreProducto,
+      'descripcion': descripcion,
+      // 'tamano': tamano,
+      // 'talla': talla,
+      // 'color': color,
+      'material': material,
+      'precioUnitario': precioUnitario,
+      'stock': cantidadDisponible,
+    };
+
+    final response = await http.post(Uri.parse('http://www.xclusivedesigns.somee.com/api/Producto')),
+    body; datosProducto;
+
+    if (response.statusCode == 200 && mounted) {
+      setState(() {
+        // productos = jsonDecode(response.body);
+        loading = false;
+      });
+    } else {
+      if (mounted) {
+        setState(() {
+          error = 'Error al cargar los productos';
+          loading = false;
+        });
+      } else {
+        if (mounted) {
+          setState(() {
+            error = 'Error al cargar los productos';
+            loading = false;
+          });
+        }
+      }
+
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +82,9 @@ class AddProductPageState extends State<AddProductsPage> {
                 border: OutlineInputBorder(),
 
               ),
+              onSaved: (value) {
+                nombreProducto = value ?? '';
+              },
             ),
             const SizedBox(height: 10),
 
@@ -36,30 +93,9 @@ class AddProductPageState extends State<AddProductsPage> {
                 labelText: 'Descripción',
                 border: OutlineInputBorder(),
               ),
-            ),
-            const SizedBox(height: 10),
-
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Tamaño',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Talla',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Color',
-                border: OutlineInputBorder(),
-              ),
+              onSaved: (value) {
+                descripcion = value ?? '';
+              },
             ),
             const SizedBox(height: 10),
 
@@ -68,6 +104,9 @@ class AddProductPageState extends State<AddProductsPage> {
                 border: OutlineInputBorder(),
                 labelText: 'Material',
               ),
+              onSaved: (value) {
+                material = value ?? '';
+              },
             ),
             const SizedBox(height: 10),
 
@@ -76,6 +115,9 @@ class AddProductPageState extends State<AddProductsPage> {
                 labelText: 'Precio unitario',
                 border: OutlineInputBorder(),
               ),
+              onSaved: (value) {
+                precioUnitario = value ?? '';
+              },
             ),
             const SizedBox(height: 10),
 
@@ -84,6 +126,9 @@ class AddProductPageState extends State<AddProductsPage> {
                 labelText: 'Cantidad disponible',
                 border: OutlineInputBorder(),
               ),
+              onSaved: (value) {
+                cantidadDisponible = value ?? '';
+              },
             ),
 
             ElevatedButton(
@@ -129,7 +174,10 @@ class AddProductPageState extends State<AddProductsPage> {
                               children: <Widget>[
                                 ElevatedButton(
                                   onPressed: () {
-                                    Navigator.pop(context);
+                                    if(_formKey.currentState != null && _formKey.currentState!.validate()) {
+                                      _formKey.currentState!.save();
+                                      agregarProducto();
+                                    }
                                   },
                                   child: const Text('Aceptar'),
                                 ),
@@ -146,12 +194,6 @@ class AddProductPageState extends State<AddProductsPage> {
                                 ),
                               ],
                             ),
-                            // ElevatedButton(
-                            //   onPressed: () {
-                            //     Navigator.pop(context);
-                            //   },
-                            //   child: const Text('Cerrar'),
-                            // )
                           ],
                         ),
                       ),

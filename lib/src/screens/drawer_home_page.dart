@@ -4,8 +4,10 @@ import 'package:xclusivedesigns/src/screens/drawer_list/Profile_customer.dart';
 import 'package:xclusivedesigns/src/screens/drawer_list/list_orders.dart';
 import 'package:xclusivedesigns/src/screens/drawer_list/list_products.dart';
 import 'package:xclusivedesigns/src/screens/drawer_list/list_quotes.dart';
+import 'package:xclusivedesigns/src/screens/drawer_navigator/navigator_quotes.dart';
 import 'package:xclusivedesigns/src/screens/principal.dart'; // Importa la página de ListQuotesPage
 import 'package:xclusivedesigns/src/screens/drawer_notification/notification.dart';
+import 'package:xclusivedesigns/src/screens/drawer_navigator/navigator_quotes.dart';
 
 
 void main() {
@@ -17,8 +19,11 @@ class BottomNavBarApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: const Color.fromARGB(178, 255, 255, 255),
+      ),
       home: BottomNavigationBarExample(),
     );
   }
@@ -42,6 +47,7 @@ class _BottomNavigationBarExampleState
     ListQuotesApp(), // Página de ListQuotesPage
     ListOrdersApp(), // Página de ListQuotesPage
     ProfileCusyomerApp(), // Página de ProfileCustomerPage
+    QuoteNavigatorApp(cotizaciones: {}), // Página de QuoteNavigatorPage
   ];
 
   void _onItemTapped(int index) {
@@ -111,6 +117,10 @@ class _BottomNavigationBarExampleState
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Perfil',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.track_changes),
+            label: 'Tarjeta',
           )
         ],
         currentIndex: _selectedIndex,
